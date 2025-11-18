@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="網頁版井字遊戲 - 與智能AI對手對戰" />
+    <title>井字遊戲 | TicTacToe Web Game</title>
+    <link rel="stylesheet" href="./styles/game.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 標題區 -->
+      <header>
+        <h1>井字遊戲</h1>
+        <p class="subtitle">與AI對手對戰</p>
+      </header>
+
+      <!-- 難度選擇區 -->
+      <section class="difficulty-section">
+        <label class="difficulty-label">難度選擇</label>
+        <div class="difficulty-buttons">
+          <button
+            id="difficulty-easy"
+            class="difficulty-btn"
+            data-difficulty="easy"
+            aria-label="簡單難度"
+            aria-pressed="false"
+          >
+            簡單
+          </button>
+          <button
+            id="difficulty-medium"
+            class="difficulty-btn active"
+            data-difficulty="medium"
+            aria-label="中等難度"
+            aria-pressed="true"
+          >
+            中等
+          </button>
+          <button
+            id="difficulty-hard"
+            class="difficulty-btn"
+            data-difficulty="hard"
+            aria-label="困難難度"
+            aria-pressed="false"
+          >
+            困難
+          </button>
+        </div>
+      </section>
+
+      <!-- 遊戲區 -->
+      <section class="game-section">
+        <div class="board-container">
+          <div id="game-board" class="game-board" role="grid" aria-label="井字遊戲棋盤">
+            <div class="game-board-cell" data-index="0" role="gridcell" aria-label="位置 0: 空"></div>
+            <div class="game-board-cell" data-index="1" role="gridcell" aria-label="位置 1: 空"></div>
+            <div class="game-board-cell" data-index="2" role="gridcell" aria-label="位置 2: 空"></div>
+            <div class="game-board-cell" data-index="3" role="gridcell" aria-label="位置 3: 空"></div>
+            <div class="game-board-cell" data-index="4" role="gridcell" aria-label="位置 4: 空"></div>
+            <div class="game-board-cell" data-index="5" role="gridcell" aria-label="位置 5: 空"></div>
+            <div class="game-board-cell" data-index="6" role="gridcell" aria-label="位置 6: 空"></div>
+            <div class="game-board-cell" data-index="7" role="gridcell" aria-label="位置 7: 空"></div>
+            <div class="game-board-cell" data-index="8" role="gridcell" aria-label="位置 8: 空"></div>
+          </div>
+
+          <!-- 結果顯示區 -->
+          <section id="result-section" class="result-section" aria-hidden="true">
+            <div id="result-message" class="result-message"></div>
+            <button id="restart-btn" class="restart-btn" data-action="restart" aria-label="重新開始遊戲">
+              重新開始
+            </button>
+          </section>
+        </div>
+
+        <!-- AI 思考指示 -->
+        <div id="ai-thinking" aria-hidden="true">
+          <span class="ai-thinking-spinner"></span>
+          <span class="ai-thinking-text">AI 正在思考中...</span>
+        </div>
+      </section>
+
+      <!-- 統計區 -->
+      <section class="stats-section">
+        <h2 class="stats-title">遊戲統計</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">玩家</span>
+            <span id="player-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">AI</span>
+            <span id="ai-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">平局</span>
+            <span id="draw-score" class="stat-value">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 頁腳 -->
+      <footer>
+        <p>
+          © 2025 TicTacToe Web Game |
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <!-- 遊戲邏輯指令碼 (按序引入) -->
+    <script src="./scripts/game-board.js"></script>
+    <script src="./scripts/game-state.js"></script>
+    <script src="./scripts/difficulty.js"></script>
+    <script src="./scripts/ai-engine.js"></script>
+    <script src="./scripts/ui-controller.js"></script>
+    <!-- 應用入點 -->
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
