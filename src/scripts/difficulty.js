@@ -121,3 +121,8 @@ class DifficultyLevel {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = DifficultyLevel;
 }
+
+// 在瀏覽器環境中暴露到全域
+if (typeof window !== 'undefined') {
+  window.DifficultyLevel = DifficultyLevel;
+}

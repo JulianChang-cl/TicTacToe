@@ -3,12 +3,6 @@
  * 使用 Minimax 演算法與優先級決策實現 AI 邏輯
  */
 
-// 支援 CommonJS require（Node.js / Jest 環境）
-// eslint-disable-next-line global-require,no-unused-vars
-const GameBoardModule = typeof require !== 'undefined' ? require('./game-board') : null;
-// eslint-disable-next-line global-require
-const DifficultyLevelModule = typeof require !== 'undefined' ? require('./difficulty') : null;
-
 class AIEngine {
   /**
    * 初始化 AI 引擎
@@ -19,8 +13,11 @@ class AIEngine {
    * @param {GameBoard} [board] - 遊戲棋盤引用 (當第一個參數為難度字串時使用)
    */
   constructor(gameStateOrDifficulty, board) {
-    // 若在 Node.js 環境，使用 require 載入的 DifficultyLevel；否則使用全域 DifficultyLevel
-    const DifficultyLevel = DifficultyLevelModule || (typeof window !== 'undefined' ? window.DifficultyLevel : global.DifficultyLevel);
+    // 使用全域 DifficultyLevel（由 webpack 或瀏覽器全域暴露）
+    const DifficultyLevel = typeof window !== 'undefined' ? window.DifficultyLevel : global.DifficultyLevel;
+    if (!DifficultyLevel) {
+      throw new Error('DifficultyLevel class not found');
+    }
     
     // 判斷是傳入 GameState 還是 difficulty + board
     if (typeof gameStateOrDifficulty === 'object' && gameStateOrDifficulty !== null && 'board' in gameStateOrDifficulty) {
@@ -50,7 +47,11 @@ class AIEngine {
    * @returns {number} 最佳著法位置 (0-8)
    */
   calculateBestMove() {
-    const GameBoard = GameBoardModule || (typeof window !== 'undefined' ? window.GameBoard : global.GameBoard);
+    // 使用全域 GameBoard（由 webpack 或瀏覽器全域暴露）
+    const GameBoard = typeof window !== 'undefined' ? window.GameBoard : global.GameBoard;
+    if (!GameBoard) {
+      throw new Error('GameBoard class not found');
+    }
     const emptyCells = this.board.getEmptyCells();
 
     if (emptyCells.length === 0) {
@@ -107,7 +108,11 @@ class AIEngine {
    * @returns {number|null} 防守著法位置或 null
    */
   getDefensiveMove() {
-    const GameBoard = GameBoardModule || (typeof window !== 'undefined' ? window.GameBoard : global.GameBoard);
+    // 使用全域 GameBoard（由 webpack 或瀏覽器全域暴露）
+    const GameBoard = typeof window !== 'undefined' ? window.GameBoard : global.GameBoard;
+    if (!GameBoard) {
+      throw new Error('GameBoard class not found');
+    }
     const emptyCells = this.board.getEmptyCells();
 
     for (const cell of emptyCells) {
@@ -133,7 +138,11 @@ class AIEngine {
    * @returns {number|null} 攻擊著法位置或 null
    */
   getOffensiveMove() {
-    const GameBoard = GameBoardModule || (typeof window !== 'undefined' ? window.GameBoard : global.GameBoard);
+    // 使用全域 GameBoard（由 webpack 或瀏覽器全域暴露）
+    const GameBoard = typeof window !== 'undefined' ? window.GameBoard : global.GameBoard;
+    if (!GameBoard) {
+      throw new Error('GameBoard class not found');
+    }
     const emptyCells = this.board.getEmptyCells();
 
     for (const cell of emptyCells) {
@@ -160,7 +169,11 @@ class AIEngine {
    * @returns {number} 評估分數
    */
   minimax(board, depth, isMaximizing) {
-    const GameBoard = GameBoardModule || (typeof window !== 'undefined' ? window.GameBoard : global.GameBoard);
+    // 使用全域 GameBoard（由 webpack 或瀏覽器全域暴露）
+    const GameBoard = typeof window !== 'undefined' ? window.GameBoard : global.GameBoard;
+    if (!GameBoard) {
+      throw new Error('GameBoard class not found');
+    }
     
     // 檢查遊戲結束狀態
     if (this.isWinningPosition(board, -1)) {
@@ -251,4 +264,9 @@ class AIEngine {
 // 導出 AIEngine 類別
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = AIEngine;
+}
+
+// 在瀏覽器環境中暴露到全域
+if (typeof window !== 'undefined') {
+  window.AIEngine = AIEngine;
 }

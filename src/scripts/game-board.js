@@ -113,3 +113,8 @@ class GameBoard {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = GameBoard;
 }
+
+// 在瀏覽器環境中暴露到全域
+if (typeof window !== 'undefined') {
+  window.GameBoard = GameBoard;
+}

@@ -3,14 +3,6 @@
  * 管理 DOM 更新、事件監聽、使用者互動
  */
 
-// 支援 CommonJS require（Node.js / Jest 環境）
-// eslint-disable-next-line global-require,no-unused-vars
-const GameStateModule = typeof require !== 'undefined' ? require('./game-state') : null;
-// eslint-disable-next-line global-require,no-unused-vars
-const AIEngineModule = typeof require !== 'undefined' ? require('./ai-engine') : null;
-// eslint-disable-next-line global-require,no-unused-vars
-const DifficultyLevelModule = typeof require !== 'undefined' ? require('./difficulty') : null;
-
 class UIController {
   /**
    * 初始化 UI 控制器
@@ -201,8 +193,11 @@ class UIController {
    * @param {string} difficulty - 難度級別
    */
   setDifficulty(difficulty) {
-    // 若在 Node.js 環境，使用 require 載入的 DifficultyLevel；否則使用全域 DifficultyLevel
-    const DifficultyLevel = DifficultyLevelModule || (typeof window !== 'undefined' ? window.DifficultyLevel : global.DifficultyLevel);
+    // 使用全域 DifficultyLevel（由 webpack 或瀏覽器全域暴露）
+    const DifficultyLevel = typeof window !== 'undefined' ? window.DifficultyLevel : global.DifficultyLevel;
+    if (!DifficultyLevel) {
+      throw new Error('DifficultyLevel class not found');
+    }
     
     if (!DifficultyLevel.isValid(difficulty)) {
       console.error(`無效的難度: ${difficulty}`);
@@ -235,13 +230,10 @@ class UIController {
 
     if (result === 'player') {
       message = '🎉 你贏了！';
-      this.gameState.playerScore++;
     } else if (result === 'ai') {
       message = '😢 AI 贏了！';
-      this.gameState.aiScore++;
     } else if (result === 'draw') {
       message = '🤝 平局！';
-      this.gameState.drawScore++;
     }
 
     this.updateStats();
@@ -354,4 +346,9 @@ class UIController {
 // 導出 UIController 類別
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = UIController;
+}
+
+// 在瀏覽器環境中暴露到全域
+if (typeof window !== 'undefined') {
+  window.UIController = UIController;
 }

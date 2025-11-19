@@ -8,6 +8,8 @@
 // eslint-disable-next-line no-unused-vars
 const GameBoard = require('../../src/scripts/game-board');
 // eslint-disable-next-line global-require
+const DifficultyLevel = require('../../src/scripts/difficulty');
+// eslint-disable-next-line global-require
 const GameState = require('../../src/scripts/game-state');
 // eslint-disable-next-line global-require
 const AIEngine = require('../../src/scripts/ai-engine');

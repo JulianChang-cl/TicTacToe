@@ -3,18 +3,17 @@
  * 管理遊戲進行、輪次、勝敗判定
  */
 
-// 支援 CommonJS require（Node.js / Jest 環境）
-// eslint-disable-next-line global-require
-const GameBoardModule = typeof require !== 'undefined' ? require('./game-board') : null;
-
 class GameState {
   /**
    * 初始化遊戲狀態
    * @param {string} difficulty - 難度等級 ('easy', 'medium', 'hard')
    */
   constructor(difficulty = 'medium') {
-    // 若在 Node.js 環境，使用 require 載入的 GameBoard；否則使用全域 GameBoard
-    const GameBoard = GameBoardModule || (typeof window !== 'undefined' ? window.GameBoard : global.GameBoard);
+    // 使用全域 GameBoard（由 webpack 或瀏覽器全域暴露）
+    const GameBoard = typeof window !== 'undefined' ? window.GameBoard : global.GameBoard;
+    if (!GameBoard) {
+      throw new Error('GameBoard class not found');
+    }
     this.board = new GameBoard();
     this.currentTurn = 'player'; // 玩家先手
     this.isGameOver = false;
@@ -190,4 +189,9 @@ class GameState {
 // 導出 GameState 類別
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = GameState;
+}
+
+// 在瀏覽器環境中暴露到全域
+if (typeof window !== 'undefined') {
+  window.GameState = GameState;
 }
