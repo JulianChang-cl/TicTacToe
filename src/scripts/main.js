@@ -10,13 +10,13 @@ import './game-state.js';
 import './ai-engine.js';
 import './ui-controller.js';
 
-// 從全域環境取得類別（這些類別在各自的檔案中被暴露到 window）
-const { GameState, AIEngine, UIController, DifficultyLevel } = window;
-
 // 應用程式初始化
 document.addEventListener('DOMContentLoaded', () => {
   try {
     console.log('🎮 TicTacToe 應用程式初始化...');
+
+    // 從 window 取得已載入的類別
+    const { GameState, AIEngine, UIController, DifficultyLevel } = window;
 
     // 1. 初始化遊戲狀態
     const gameState = new GameState('medium');
