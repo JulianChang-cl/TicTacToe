@@ -3,6 +3,9 @@
  * 初始化遊戲引擎、UI 控制器、事件系統
  */
 
+// 導入 CSS
+import '../styles/game.css';
+
 // 導入所有必要的模組
 import './game-board.js';
 import './difficulty.js';
