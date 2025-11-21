@@ -3,6 +3,16 @@
  * 初始化遊戲引擎、UI 控制器、事件系統
  */
 
+// 導入所有必要的模組
+import './game-board.js';
+import './difficulty.js';
+import './game-state.js';
+import './ai-engine.js';
+import './ui-controller.js';
+
+// 從全域環境取得類別（這些類別在各自的檔案中被暴露到 window）
+const { GameState, AIEngine, UIController, DifficultyLevel } = window;
+
 // 應用程式初始化
 document.addEventListener('DOMContentLoaded', () => {
   try {
